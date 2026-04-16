@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
+import { ResetButton } from '@/components/layout/ResetButton'
 
 export const metadata: Metadata = {
   title: 'Monato — Onboarding Self-Service',
@@ -19,6 +20,7 @@ export default function RootLayout({
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
           {children}
         </main>
+        <ResetButton />
       </body>
     </html>
   )

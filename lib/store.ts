@@ -20,7 +20,9 @@ interface OnboardingStore {
   // Usuario
   email: string
   companyName: string
+  companyRfc: string
   userName: string
+  userRole: string
 
   // Fase actual
   currentPhase: OnboardingPhase
@@ -47,7 +49,7 @@ interface OnboardingStore {
   contractSigned: boolean
 
   // Actions
-  register: (email: string, companyName: string, userName: string) => void
+  register: (email: string, companyName: string, companyRfc: string, userName: string, userRole: string) => void
   setPhase: (phase: OnboardingPhase) => void
   declareIntent: () => void
   setKybStep: (step: 1 | 2 | 3) => void
@@ -70,10 +72,12 @@ const defaultKybData: KybData = {
 
 export const useOnboardingStore = create<OnboardingStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       email: '',
       companyName: '',
+      companyRfc: '',
       userName: '',
+      userRole: '',
       currentPhase: 'registro',
       stagingPublicKey: '',
       stagingSecretKey: '',
@@ -87,11 +91,13 @@ export const useOnboardingStore = create<OnboardingStore>()(
       uatCertified: false,
       contractSigned: false,
 
-      register: (email, companyName, userName) =>
+      register: (email, companyName, companyRfc, userName, userRole) =>
         set({
           email,
           companyName,
+          companyRfc,
           userName,
+          userRole,
           currentPhase: 'sandbox',
           stagingPublicKey: generateApiKey('pk', 'sandbox'),
           stagingSecretKey: generateApiKey('sk', 'sandbox'),
@@ -134,7 +140,9 @@ export const useOnboardingStore = create<OnboardingStore>()(
         set({
           email: '',
           companyName: '',
+          companyRfc: '',
           userName: '',
+          userRole: '',
           currentPhase: 'registro',
           stagingPublicKey: '',
           stagingSecretKey: '',

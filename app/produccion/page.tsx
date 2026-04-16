@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useOnboardingStore } from '@/lib/store'
 import { Button } from '@/components/ui/button'
@@ -9,6 +9,7 @@ import {
   CheckCircle2, Copy, Check, Eye, EyeOff,
   ExternalLink, Zap, ArrowRight
 } from 'lucide-react'
+import { useState } from 'react'
 
 function ProductionKey({ label, value }: { label: string; value: string }) {
   const [visible, setVisible] = useState(false)
@@ -59,18 +60,11 @@ const JOURNEY_SUMMARY = [
 
 export default function ProduccionPage() {
   const router = useRouter()
-  const { email, companyName, productionPublicKey, productionSecretKey, contractSigned, reset } = useOnboardingStore()
-  const [showReset, setShowReset] = useState(false)
-
+  const { email, companyName, productionPublicKey, productionSecretKey, contractSigned } = useOnboardingStore()
   useEffect(() => {
     if (!email) router.push('/registro')
     if (!contractSigned) router.push('/contrato')
   }, [email, contractSigned, router])
-
-  function handleReset() {
-    reset()
-    router.push('/')
-  }
 
   if (!email || !productionPublicKey || !productionSecretKey) return null
 
@@ -181,34 +175,7 @@ export default function ProduccionPage() {
         </div>
       </div>
 
-      {/* Demo reset */}
-      <div className="text-center pt-4">
-        <button
-          onClick={() => setShowReset(true)}
-          className="text-xs text-slate-400 hover:text-slate-600 underline underline-offset-2"
-        >
-          Reiniciar demo
-        </button>
-        {showReset && (
-          <div className="mt-3 bg-amber-50 border border-amber-200 rounded-lg p-4 space-y-3">
-            <p className="text-sm text-amber-800">
-              Esto borrará todo el estado del demo y regresará al inicio.
-            </p>
-            <div className="flex justify-center gap-3">
-              <Button size="sm" variant="outline" onClick={() => setShowReset(false)}>
-                Cancelar
-              </Button>
-              <Button
-                size="sm"
-                className="bg-amber-600 hover:bg-amber-700 text-white"
-                onClick={handleReset}
-              >
-                Reiniciar demo
-              </Button>
-            </div>
-          </div>
-        )}
-      </div>
+      <div className="pb-8" />
     </div>
   )
 }
