@@ -60,11 +60,12 @@ const JOURNEY_SUMMARY = [
 
 export default function ProduccionPage() {
   const router = useRouter()
-  const { email, companyName, productionPublicKey, productionSecretKey, contractSigned } = useOnboardingStore()
+  const { email, companyName, productionPublicKey, productionSecretKey, contractSigned, setPhase } = useOnboardingStore()
   useEffect(() => {
-    if (!email) router.push('/registro')
-    if (!contractSigned) router.push('/contrato')
-  }, [email, contractSigned, router])
+    if (!email) { router.push('/registro'); return }
+    if (!contractSigned) { router.push('/contrato'); return }
+    setPhase('produccion')
+  }, [email, contractSigned, router, setPhase])
 
   if (!email || !productionPublicKey || !productionSecretKey) return null
 

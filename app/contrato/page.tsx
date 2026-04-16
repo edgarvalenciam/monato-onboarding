@@ -56,8 +56,8 @@ export default function ContratoPage() {
 
   useEffect(() => {
     if (!email) { router.push('/registro'); return }
+    if (contractSigned) { router.push('/produccion'); return }
     setPhase('contrato')
-    if (contractSigned) router.push('/produccion')
   }, [email, router, setPhase, contractSigned])
 
   function handleScroll(e: React.UIEvent<HTMLDivElement>) {
